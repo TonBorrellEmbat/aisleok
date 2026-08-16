@@ -1,0 +1,1383 @@
+{
+  "app": "AisleOK",
+  "version": "v1",
+  "alias_count": 186,
+  "tag_count": 103,
+  "scoring": {
+    "normalize": "lowercase; strip punctuation except hyphens; collapse whitespace; longest alias first",
+    "top": "first 5 ingredients on a packaged label",
+    "late": "position > 5",
+    "priority": "skip > small > eat; tie = earliest in the list",
+    "named_ingredient": "display_name of the winning tag",
+    "produce": "typed name uses default_band; ignore if_late",
+    "unknown": "no ingredients parsed, or zero trusted matches",
+    "plural": "after longest-alias match, also accept simple English plural/singular of each alias",
+    "corn_starch": "do not match alias 'corn' inside 'corn starch' or 'corn syrup' \u2014 require whole-token equality after split, except multi-word aliases",
+    "whole_token": "After comma-split, the entire ingredient token must equal an alias (or its simple plural/singular). Do not match an alias as a word inside a longer token. Confirmed miss: soybeans/soybean must not match 'soybean oil' (mayo, Jif). Same class, later: almond must not match almond milk. Already: corn must not match corn starch or corn syrup.",
+    "ocr": "v1 required, not a fallback. Unknown in-aisle = SKU not in OFF AND OCR fail, not a thin dictionary.",
+    "usda": "No USDA in v1. No data.gov key in the app.",
+    "backend": "No backend in v1.",
+    "head_noun": "A token also matches if its last word equals an alias (or simple plural), EXCEPT lactose-family tags, which are exact-token only: milk, cream, whey, yogurt, lactose, buttermilk, ice cream, soft cheese. So 'almond milk' and 'oat milk' do not become milk \u2192 skip. 'whole grain oats' \u2192 oats and 'roasted peanuts' \u2192 peanuts still work. 'soybean oil' / 'peanut oil' last word is oil, unmatched. Mayo stays eat.",
+    "exact_token_only_ids": [
+      "milk",
+      "cream",
+      "whey",
+      "yogurt",
+      "lactose",
+      "buttermilk",
+      "ice_cream",
+      "soft_cheese"
+    ]
+  },
+  "non_tags": [
+    "natural flavor",
+    "natural flavors",
+    "spices",
+    "spice",
+    "yeast extract"
+  ],
+  "tags": [
+    {
+      "id": "garlic",
+      "display_name": "garlic",
+      "aliases": [
+        "garlic"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "garlic_powder",
+      "display_name": "garlic powder",
+      "aliases": [
+        "garlic powder",
+        "granulated garlic",
+        "dehydrated garlic"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "garlic_salt",
+      "display_name": "garlic salt",
+      "aliases": [
+        "garlic salt"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "garlic_oil",
+      "display_name": "garlic oil",
+      "aliases": [
+        "garlic oil",
+        "garlic extract"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "onion",
+      "display_name": "onion",
+      "aliases": [
+        "onion",
+        "onions"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "onion_powder",
+      "display_name": "onion powder",
+      "aliases": [
+        "onion powder",
+        "dehydrated onion",
+        "onion flakes"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "onion_salt",
+      "display_name": "onion salt",
+      "aliases": [
+        "onion salt"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "shallot",
+      "display_name": "shallot",
+      "aliases": [
+        "shallot",
+        "shallots"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "leek",
+      "display_name": "leek",
+      "aliases": [
+        "leek",
+        "leeks"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "scallion",
+      "display_name": "green onion",
+      "aliases": [
+        "scallion",
+        "scallions",
+        "green onion",
+        "green onions",
+        "spring onion"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "chives",
+      "display_name": "chives",
+      "aliases": [
+        "chives"
+      ],
+      "default_band": "small",
+      "if_late": "eat",
+      "category": "fructan",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "wheat",
+      "display_name": "wheat",
+      "aliases": [
+        "wheat",
+        "wheat flour",
+        "enriched flour",
+        "enriched wheat flour",
+        "whole wheat flour",
+        "wheat gluten",
+        "hydrolyzed wheat protein"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "durum",
+      "display_name": "durum wheat",
+      "aliases": [
+        "durum",
+        "semolina"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "couscous",
+      "display_name": "couscous",
+      "aliases": [
+        "couscous"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "spelt",
+      "display_name": "spelt",
+      "aliases": [
+        "spelt"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "farro",
+      "display_name": "farro",
+      "aliases": [
+        "farro"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "rye",
+      "display_name": "rye",
+      "aliases": [
+        "rye",
+        "rye flour"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "barley",
+      "display_name": "barley",
+      "aliases": [
+        "barley",
+        "barley malt"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "milk",
+      "display_name": "milk",
+      "aliases": [
+        "milk",
+        "milk solids",
+        "nonfat dry milk"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "lactose",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "lactose",
+      "display_name": "lactose",
+      "aliases": [
+        "lactose"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "lactose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "whey",
+      "display_name": "whey",
+      "aliases": [
+        "whey"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "lactose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "buttermilk",
+      "display_name": "buttermilk",
+      "aliases": [
+        "buttermilk"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "lactose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "cream",
+      "display_name": "cream",
+      "aliases": [
+        "cream"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "lactose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "yogurt",
+      "display_name": "yogurt",
+      "aliases": [
+        "yogurt"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "lactose",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "ice_cream",
+      "display_name": "ice cream",
+      "aliases": [
+        "ice cream",
+        "custard"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "lactose",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "soft_cheese",
+      "display_name": "soft cheese",
+      "aliases": [
+        "cream cheese",
+        "cottage cheese",
+        "ricotta",
+        "sour cream"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "lactose",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "inulin",
+      "display_name": "inulin",
+      "aliases": [
+        "inulin",
+        "chicory root",
+        "chicory root fiber",
+        "oligofructose"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "jerusalem_artichoke",
+      "display_name": "Jerusalem artichoke",
+      "aliases": [
+        "jerusalem artichoke",
+        "sunchoke"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "sorbitol",
+      "display_name": "sorbitol",
+      "aliases": [
+        "sorbitol"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "mannitol",
+      "display_name": "mannitol",
+      "aliases": [
+        "mannitol"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "maltitol",
+      "display_name": "maltitol",
+      "aliases": [
+        "maltitol"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "xylitol",
+      "display_name": "xylitol",
+      "aliases": [
+        "xylitol"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "isomalt",
+      "display_name": "isomalt",
+      "aliases": [
+        "isomalt"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "lactitol",
+      "display_name": "lactitol",
+      "aliases": [
+        "lactitol"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "sugar_alcohol",
+      "display_name": "sugar alcohol",
+      "aliases": [
+        "sugar alcohol",
+        "sugar alcohols"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "erythritol",
+      "display_name": "erythritol",
+      "aliases": [
+        "erythritol"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "polyol",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "hfcs",
+      "display_name": "high-fructose corn syrup",
+      "aliases": [
+        "high fructose corn syrup",
+        "high-fructose corn syrup"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "honey",
+      "display_name": "honey",
+      "aliases": [
+        "honey"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "agave",
+      "display_name": "agave",
+      "aliases": [
+        "agave",
+        "agave nectar"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "apple_juice_concentrate",
+      "display_name": "apple juice concentrate",
+      "aliases": [
+        "apple juice concentrate",
+        "pear juice concentrate"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "fructose",
+      "display_name": "fructose",
+      "aliases": [
+        "fructose"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "beans",
+      "display_name": "beans",
+      "aliases": [
+        "beans",
+        "black beans",
+        "kidney beans",
+        "pinto beans"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "gos",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "chickpea",
+      "display_name": "chickpeas",
+      "aliases": [
+        "chickpeas",
+        "garbanzo beans",
+        "hummus"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "gos",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "lentil",
+      "display_name": "lentils",
+      "aliases": [
+        "lentils",
+        "lentil flour"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "gos",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "soy_bean",
+      "display_name": "soybeans",
+      "aliases": [
+        "soybeans",
+        "soy flour"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "gos",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "cashew",
+      "display_name": "cashews",
+      "aliases": [
+        "cashews",
+        "cashew butter"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "gos",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "pistachio",
+      "display_name": "pistachios",
+      "aliases": [
+        "pistachios"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "gos",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "almond",
+      "display_name": "almonds",
+      "aliases": [
+        "almonds"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "other",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "cauliflower",
+      "display_name": "cauliflower",
+      "aliases": [
+        "cauliflower"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "mushroom",
+      "display_name": "mushroom",
+      "aliases": [
+        "mushroom",
+        "mushrooms"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "artichoke",
+      "display_name": "artichoke",
+      "aliases": [
+        "artichoke",
+        "artichokes"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "asparagus",
+      "display_name": "asparagus",
+      "aliases": [
+        "asparagus"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructan",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "cabbage",
+      "display_name": "cabbage",
+      "aliases": [
+        "cabbage"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "brussels",
+      "display_name": "Brussels sprouts",
+      "aliases": [
+        "brussels sprouts"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "snap_pea",
+      "display_name": "sugar snap peas",
+      "aliases": [
+        "sugar snap peas",
+        "snow peas"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "avocado",
+      "display_name": "avocado",
+      "aliases": [
+        "avocado",
+        "avocados"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "polyol",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "sweet_potato",
+      "display_name": "sweet potato",
+      "aliases": [
+        "sweet potato",
+        "sweet potatoes"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "corn",
+      "display_name": "corn",
+      "aliases": [
+        "corn",
+        "sweet corn"
+      ],
+      "default_band": "small",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "beet",
+      "display_name": "beet",
+      "aliases": [
+        "beet",
+        "beets"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "fructan",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "apple",
+      "display_name": "apple",
+      "aliases": [
+        "apple",
+        "apples",
+        "applesauce",
+        "apple juice"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "pear",
+      "display_name": "pear",
+      "aliases": [
+        "pear",
+        "pears",
+        "pear juice"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "mango",
+      "display_name": "mango",
+      "aliases": [
+        "mango",
+        "mangoes"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructose",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "watermelon",
+      "display_name": "watermelon",
+      "aliases": [
+        "watermelon"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "fructose",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "cherry",
+      "display_name": "cherries",
+      "aliases": [
+        "cherry",
+        "cherries"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "blackberry",
+      "display_name": "blackberries",
+      "aliases": [
+        "blackberry",
+        "blackberries"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "peach",
+      "display_name": "peach",
+      "aliases": [
+        "peach",
+        "peaches"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "nectarine",
+      "display_name": "nectarine",
+      "aliases": [
+        "nectarine",
+        "nectarines"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "plum",
+      "display_name": "plum",
+      "aliases": [
+        "plum",
+        "plums"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "apricot",
+      "display_name": "apricot",
+      "aliases": [
+        "apricot",
+        "apricots"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "dried_fruit",
+      "display_name": "dried fruit",
+      "aliases": [
+        "dried fruit",
+        "raisins",
+        "dates",
+        "prunes"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "both",
+      "notes": ""
+    },
+    {
+      "id": "fruit_juice",
+      "display_name": "fruit juice",
+      "aliases": [
+        "fruit juice"
+      ],
+      "default_band": "skip",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "ingredient",
+      "notes": ""
+    },
+    {
+      "id": "banana",
+      "display_name": "banana",
+      "aliases": [
+        "banana",
+        "bananas"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "grapefruit",
+      "display_name": "grapefruit",
+      "aliases": [
+        "grapefruit"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "fructose",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "lychee",
+      "display_name": "lychee",
+      "aliases": [
+        "lychee"
+      ],
+      "default_band": "skip",
+      "if_late": "skip",
+      "category": "polyol",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "pineapple",
+      "display_name": "pineapple",
+      "aliases": [
+        "pineapple"
+      ],
+      "default_band": "small",
+      "if_late": "eat",
+      "category": "fructose",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "carrot",
+      "display_name": "carrot",
+      "aliases": [
+        "carrot",
+        "carrots"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "potato",
+      "display_name": "potato",
+      "aliases": [
+        "potato",
+        "potatoes"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "grape",
+      "display_name": "grapes",
+      "aliases": [
+        "grape",
+        "grapes"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "strawberry",
+      "display_name": "strawberries",
+      "aliases": [
+        "strawberry",
+        "strawberries"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "blueberry",
+      "display_name": "blueberries",
+      "aliases": [
+        "blueberry",
+        "blueberries"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "raspberry",
+      "display_name": "raspberries",
+      "aliases": [
+        "raspberry",
+        "raspberries"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "orange",
+      "display_name": "orange",
+      "aliases": [
+        "orange",
+        "oranges",
+        "clementine"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "kiwi",
+      "display_name": "kiwi",
+      "aliases": [
+        "kiwi"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "cantaloupe",
+      "display_name": "cantaloupe",
+      "aliases": [
+        "cantaloupe"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "honeydew",
+      "display_name": "honeydew",
+      "aliases": [
+        "honeydew"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "lemon",
+      "display_name": "lemon",
+      "aliases": [
+        "lemon",
+        "lime"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "cucumber",
+      "display_name": "cucumber",
+      "aliases": [
+        "cucumber"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "lettuce",
+      "display_name": "lettuce",
+      "aliases": [
+        "lettuce"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "spinach",
+      "display_name": "spinach",
+      "aliases": [
+        "spinach"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "kale",
+      "display_name": "kale",
+      "aliases": [
+        "kale"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "tomato",
+      "display_name": "tomato",
+      "aliases": [
+        "tomato",
+        "tomatoes"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "bell_pepper",
+      "display_name": "bell pepper",
+      "aliases": [
+        "bell pepper",
+        "bell peppers"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "zucchini",
+      "display_name": "zucchini",
+      "aliases": [
+        "zucchini"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "eggplant",
+      "display_name": "eggplant",
+      "aliases": [
+        "eggplant"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "green_bean",
+      "display_name": "green beans",
+      "aliases": [
+        "green beans"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "broccoli",
+      "display_name": "broccoli",
+      "aliases": [
+        "broccoli"
+      ],
+      "default_band": "small",
+      "if_late": "small",
+      "category": "other",
+      "kind": "produce",
+      "notes": "Public sources disagree. Locked small over a confident eat."
+    },
+    {
+      "id": "bok_choy",
+      "display_name": "bok choy",
+      "aliases": [
+        "bok choy"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "radish",
+      "display_name": "radish",
+      "aliases": [
+        "radish",
+        "radishes"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "pumpkin",
+      "display_name": "pumpkin",
+      "aliases": [
+        "pumpkin"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "yam",
+      "display_name": "yam",
+      "aliases": [
+        "yam",
+        "yams"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "papaya",
+      "display_name": "papaya",
+      "aliases": [
+        "papaya"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "produce",
+      "notes": ""
+    },
+    {
+      "id": "oats",
+      "display_name": "oats",
+      "aliases": [
+        "oats",
+        "rolled oats",
+        "oat flour"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "both",
+      "notes": "QA eat-default. Cheerios unknown in the 25-barcode sample. Do not add other grains."
+    },
+    {
+      "id": "peanuts",
+      "display_name": "peanuts",
+      "aliases": [
+        "peanuts",
+        "peanut",
+        "peanut butter"
+      ],
+      "default_band": "eat",
+      "if_late": "eat",
+      "category": "other",
+      "kind": "both",
+      "notes": "QA eat-default. Jif unknown in the 25-barcode sample. Whole-token: peanut must not match peanut oil."
+    }
+  ],
+  "off": {
+    "endpoint": "GET https://world.openfoodfacts.org/api/v3/product/{code}",
+    "user_agent": "custom AppName/Version (contact email) required",
+    "calls": "1 live call per real user scan",
+    "attribution": "Attribute Open Food Facts and link the OFF product page on the result",
+    "cache": "Do not cache a substantial OFF extract (ODbL share-alike). Tag list stays our IP, separate.",
+    "looks_wrong": "Verdict control 'This looks wrong' treats the OFF list as no ingredients \u2192 Unknown + Photo of label. Do not silently rescore a bad list. Example: Chobani Vanilla 0037600115445 returned pork/ham.",
+    "flow": "scan \u2192 OFF v3 \u2192 score locked 101 tags \u2192 else Unknown + photo",
+    "looks_wrong_ui": {
+      "placement": "same verdict screen, under dose line or under ingredient chip if no dose",
+      "style": "text link only, regular weight, sand, no icon, no confirm",
+      "visible_on": [
+        "eat",
+        "small",
+        "skip"
+      ],
+      "hidden_on": [
+        "unknown"
+      ],
+      "tap": "drop OFF ingredients, keep product name, switch to Unknown + 'We don\u2019t know this one', primary button Photo of label",
+      "app_store_frames": false
+    }
+  }
+}
