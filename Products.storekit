@@ -1,0 +1,56 @@
+{
+  "identifier" : "AisleOK",
+  "nonRenewingSubscriptions" : [],
+  "products" : [],
+  "settings" : { "_failTransactionsEnabled" : false },
+  "subscriptionGroups" : [
+    {
+      "id" : "AisleOK",
+      "localizations" : [],
+      "name" : "AisleOK",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "49.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "yearly4999",
+          "introductoryOffer" : {
+            "displayPrice" : "0",
+            "internalID" : "yearlyTrial",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
+          "localizations" : [
+            { "description" : "Unlimited aisle checks", "displayName" : "AisleOK Yearly", "locale" : "en_US" }
+          ],
+          "productID" : "yearly.4999",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "AisleOK Yearly",
+          "type" : "RecurringSubscription"
+        },
+        {
+          "adHocOffers" : [],
+          "codeOffers" : [],
+          "displayPrice" : "9.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "monthly999",
+          "localizations" : [
+            { "description" : "Unlimited aisle checks", "displayName" : "AisleOK Monthly", "locale" : "en_US" }
+          ],
+          "productID" : "monthly.999",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "AisleOK Monthly",
+          "type" : "RecurringSubscription"
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
