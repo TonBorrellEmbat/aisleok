@@ -1,7 +1,9 @@
+import AVFoundation
 import SwiftUI
 
 struct ScanHomeView: View {
     @EnvironmentObject private var model: AppModel
+    @State private var cameraAuthorized = CameraAvailability.canShowLiveCamera
 
     var body: some View {
         VStack(spacing: 16) {
@@ -46,11 +48,14 @@ struct ScanHomeView: View {
                 }
             }
         }
+        .task {
+            await requestCamera()
+        }
     }
 
     private var cameraWell: some View {
         ZStack {
-            if CameraAvailability.canShowLiveCamera {
+            if cameraAuthorized {
                 BarcodeScannerView { code in
                     model.handleBarcode(code)
                 }
@@ -78,5 +83,18 @@ struct ScanHomeView: View {
                 .stroke(Color.secondary.opacity(0.25), lineWidth: 1)
         )
         .padding(.top, 8)
+    }
+
+    private func requestCamera() async {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        switch status {
+        case .authorized:
+            cameraAuthorized = CameraAvailability.canShowLiveCamera
+        case .notDetermined:
+            let granted = await AVCaptureDevice.requestAccess(for: .video)
+            cameraAuthorized = granted && CameraAvailability.canShowLiveCamera
+        default:
+            cameraAuthorized = false
+        }
     }
 }

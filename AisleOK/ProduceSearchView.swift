@@ -52,12 +52,6 @@ struct ProduceSearchView: View {
         .onChange(of: query) { _, _ in
             score(markAttempt: false)
         }
-        .sheet(isPresented: $model.showPaywall) {
-            if let outcome {
-                PaywallView(recap: outcome)
-                    .presentationDetents([.medium, .large])
-            }
-        }
     }
 
     @ViewBuilder
@@ -105,6 +99,7 @@ struct ProduceSearchView: View {
         if (markAttempt || trusted) && !markedUseful {
             markedUseful = true
             model.outcomes[next.id] = next
+            model.lastOutcome = next
             model.recordUsefulScan()
         }
     }

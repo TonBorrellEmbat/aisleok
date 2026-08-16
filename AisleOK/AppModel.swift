@@ -38,6 +38,7 @@ final class AppModel: ObservableObject {
     @Published var showOnboarding: Bool
     @Published var isWorking = false
     @Published var scanMessage: String?
+    @Published var lastOutcome: ScanOutcome?
 
     let settings: TriggerSettings
     let store: StoreKitStore
@@ -97,6 +98,7 @@ final class AppModel: ObservableObject {
 
     func present(_ outcome: ScanOutcome, markUseful: Bool) {
         outcomes[outcome.id] = outcome
+        lastOutcome = outcome
         path.append(.verdict(outcome.id))
         if markUseful {
             recordUsefulScan()
@@ -145,7 +147,7 @@ final class AppModel: ObservableObject {
                     source: .barcode,
                     looksWrongApplied: false
                 )
-                present(outcome, markUseful: !outcome.isUnknown)
+                present(outcome, markUseful: true)
             } else {
                 let outcome = ScanOutcome(
                     id: UUID(),
@@ -156,7 +158,7 @@ final class AppModel: ObservableObject {
                     source: .barcode,
                     looksWrongApplied: false
                 )
-                present(outcome, markUseful: !outcome.isUnknown)
+                present(outcome, markUseful: true)
             }
         } catch {
             scanMessage = "Couldn’t reach Open Food Facts."
@@ -169,7 +171,7 @@ final class AppModel: ObservableObject {
                 source: .barcode,
                 looksWrongApplied: false
             )
-            present(outcome, markUseful: !outcome.isUnknown)
+            present(outcome, markUseful: true)
         }
     }
 
@@ -199,7 +201,7 @@ final class AppModel: ObservableObject {
             source: .ocr,
             looksWrongApplied: false
         )
-        present(outcome, markUseful: !outcome.isUnknown)
+        present(outcome, markUseful: true)
     }
 
     static func ingredients(fromOCR text: String) -> String {

@@ -1,4 +1,5 @@
 import AVFoundation
+import UIKit
 import SwiftUI
 import Vision
 
@@ -119,14 +120,32 @@ extension OCRCaptureController: AVCapturePhotoCaptureDelegate {
     }
 }
 
+private final class OnceResume {
+    private let lock = NSLock()
+    private var continuation: CheckedContinuation<String, Never>?
+
+    init(_ continuation: CheckedContinuation<String, Never>) {
+        self.continuation = continuation
+    }
+
+    func finish(_ value: String) {
+        lock.lock()
+        let cont = continuation
+        continuation = nil
+        lock.unlock()
+        cont?.resume(returning: value)
+    }
+}
+
 enum LabelOCR {
     static func recognize(_ image: UIImage) async -> String {
         guard let cgImage = image.cgImage else { return "" }
         return await withCheckedContinuation { continuation in
+            let once = OnceResume(continuation)
             let request = VNRecognizeTextRequest { request, _ in
                 let observations = request.results as? [VNRecognizedTextObservation] ?? []
                 let lines = observations.compactMap { $0.topCandidates(1).first?.string }
-                continuation.resume(returning: lines.joined(separator: "\n"))
+                once.finish(lines.joined(separator: "\n"))
             }
             request.recognitionLevel = .accurate
             request.recognitionLanguages = ["en-US"]
@@ -136,7 +155,7 @@ enum LabelOCR {
                 do {
                     try handler.perform([request])
                 } catch {
-                    continuation.resume(returning: "")
+                    once.finish("")
                 }
             }
         }

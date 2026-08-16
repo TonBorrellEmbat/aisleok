@@ -54,5 +54,12 @@ struct RootView: View {
                 .environmentObject(model)
                 .environmentObject(model.settings)
         }
+        .sheet(isPresented: $model.showPaywall) {
+            if let recap = model.lastOutcome {
+                PaywallView(recap: recap)
+                    .presentationDetents([.medium, .large])
+                    .environmentObject(model.store)
+            }
+        }
     }
 }

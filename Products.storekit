@@ -1,12 +1,21 @@
 {
-  "identifier" : "AisleOK",
+  "identifier" : "A8E0C2B1-4D3F-4A11-9C77-0F6B2E1A9D40",
   "nonRenewingSubscriptions" : [],
   "products" : [],
-  "settings" : { "_failTransactionsEnabled" : false },
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storefront" : "USA"
+  },
   "subscriptionGroups" : [
     {
-      "id" : "AisleOK",
-      "localizations" : [],
+      "id" : "B7C1D4E2-8A90-4F12-B3C5-1D2E3F4A5B6C",
+      "localizations" : [
+        {
+          "description" : "AisleOK",
+          "displayName" : "AisleOK",
+          "locale" : "en_US"
+        }
+      ],
       "name" : "AisleOK",
       "subscriptions" : [
         {
@@ -15,16 +24,19 @@
           "displayPrice" : "49.99",
           "familyShareable" : false,
           "groupNumber" : 1,
-          "internalID" : "yearly4999",
+          "internalID" : "C1A2B3C4-D5E6-4F70-8192-A3B4C5D6E7F8",
           "introductoryOffer" : {
-            "displayPrice" : "0",
-            "internalID" : "yearlyTrial",
+            "internalID" : "D9E8F7A6-B5C4-4D32-91E0-F1A2B3C4D5E6",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
           },
           "localizations" : [
-            { "description" : "Unlimited aisle checks", "displayName" : "AisleOK Yearly", "locale" : "en_US" }
+            {
+              "description" : "Unlimited aisle checks for a year.",
+              "displayName" : "AisleOK Yearly",
+              "locale" : "en_US"
+            }
           ],
           "productID" : "yearly.4999",
           "recurringSubscriptionPeriod" : "P1Y",
@@ -36,10 +48,14 @@
           "codeOffers" : [],
           "displayPrice" : "9.99",
           "familyShareable" : false,
-          "groupNumber" : 1,
-          "internalID" : "monthly999",
+          "groupNumber" : 2,
+          "internalID" : "E5F6A7B8-C9D0-4E12-8345-F6A7B8C9D0E1",
           "localizations" : [
-            { "description" : "Unlimited aisle checks", "displayName" : "AisleOK Monthly", "locale" : "en_US" }
+            {
+              "description" : "Unlimited aisle checks by the month.",
+              "displayName" : "AisleOK Monthly",
+              "locale" : "en_US"
+            }
           ],
           "productID" : "monthly.999",
           "recurringSubscriptionPeriod" : "P1M",

@@ -265,7 +265,7 @@ enum WhyCopy {
             return (
                 "Inulin is a fiber added to a lot of “high-fiber” foods.",
                 "It is easy to miss on a label and easy to notice later.",
-                "There isn’t a comfortable small serve for inulin in v1 — treat it as a skip."
+                "There isn’t a comfortable small serve for inulin in v1 — it stays a skip."
             )
         default:
             return (

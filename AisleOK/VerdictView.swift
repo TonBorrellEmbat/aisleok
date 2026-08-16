@@ -91,10 +91,6 @@ struct VerdictView: View {
         .sheet(isPresented: $showWhy) {
             WhySheet(outcome: current)
         }
-        .sheet(isPresented: $model.showPaywall) {
-            PaywallView(recap: current)
-                .presentationDetents([.medium, .large])
-        }
         .accessibilityElement(children: .combine)
     }
 

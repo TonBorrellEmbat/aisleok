@@ -6,8 +6,6 @@
 	<string>AisleOK</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Scan grocery barcodes and ingredient labels.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Read an ingredient list from a photo you pick.</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UISupportedInterfaceOrientations</key>

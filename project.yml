@@ -13,7 +13,6 @@ settings:
     GENERATE_INFOPLIST_FILE: YES
     INFOPLIST_KEY_CFBundleDisplayName: AisleOK
     INFOPLIST_KEY_NSCameraUsageDescription: "Scan grocery barcodes and ingredient labels."
-    INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "Read an ingredient list from a photo you pick."
     INFOPLIST_KEY_UILaunchScreen_Generation: YES
     INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
     TARGETED_DEVICE_FAMILY: "1"
@@ -42,7 +41,6 @@ targets:
       properties:
         CFBundleDisplayName: AisleOK
         NSCameraUsageDescription: "Scan grocery barcodes and ingredient labels."
-        NSPhotoLibraryUsageDescription: "Read an ingredient list from a photo you pick."
         UILaunchScreen: {}
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
